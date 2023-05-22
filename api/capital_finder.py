@@ -10,21 +10,32 @@ class handler(BaseHTTPRequestHandler):
         query_str =parse.parse_qsl(url.query)
         dic = dict(query_str)
         country = dic.get("country")
-        print(country)
+        capital = dic.get("capital")
+        # print(country)
 
-        capital=""
+     
         if country:
-            url="https://restcountries.com/v3.1/all"
-            res = requests.get(url)
+            url="https://restcountries.com/v3.1/name/"
+            res = requests.get(url+country)
             data = res.json()
-            # for i in data:
-            #     if i[0]["common"] == country:
-            #         capital = i[11][0]
-            #         return 
+            result = data[0]["capital"][0]
+            # print(url)
+
+            Result = "The capital of "+country+" is "+result+"."
+
+        if capital:
+            url="https://restcountries.com/v3.1/capital/"
+            res = requests.get(url+capital)
+            data = res.json()
+            result = data[0]["name"]["common"]
+            # print(url)
+
+            Result = capital+" is the capital of "+result+"."
+
 
 
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        self.wfile.write(data.encode('utf-8'))
+        self.wfile.write(Result.encode('utf-8'))
         return
