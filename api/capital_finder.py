@@ -17,14 +17,14 @@ class handler(BaseHTTPRequestHandler):
             url="https://restcountries.com/v3.1/all"
             res = requests.get(url)
             data = res.json()
-            for i in data:
-                if i[0]["common"] == country:
-                    capital = i[11][0]
-                    return 
+            # for i in data:
+            #     if i[0]["common"] == country:
+            #         capital = i[11][0]
+            #         return 
 
 
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        self.wfile.write(capital.encode('utf-8'))
+        self.wfile.write(data.encode('utf-8'))
         return
