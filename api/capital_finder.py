@@ -15,7 +15,7 @@ class handler(BaseHTTPRequestHandler):
         capital=""
         if country:
             url="https://restcountries.com/v3.1/all"
-            res = requests.get(url+country)
+            res = requests.get(url)
             data = res.json()
             for i in data:
                 if i[0]["common"] == country:
