@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 from urllib import parse
+import requests
  
 class handler(BaseHTTPRequestHandler):
  
@@ -11,8 +12,19 @@ class handler(BaseHTTPRequestHandler):
         country = dic.get("country")
         print(country)
 
+        capital=""
+        if country:
+            url="https://restcountries.com/v3.1/all"
+            res = requests.get(url+country)
+            data = res.json()
+            for i in data:
+                if i[0]["common"] == country:
+                    capital = i[11][0]
+                    return 
+
+
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        self.wfile.write(country.encode('utf-8'))
+        self.wfile.write(capital.encode('utf-8'))
         return
